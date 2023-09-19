@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Event\PostSavedEvent;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +25,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/new', name: 'app_post_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -33,7 +35,20 @@ class PostController extends AbstractController
             $entityManager->persist($post);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_post_index', [], Response::HTTP_SEE_OTHER);
+            // Créez une nouvelle instance de l'événement
+            $event = new PostSavedEvent($post);
+
+            // Déclenchez l'événement
+            $dispatcher->dispatch($event, PostSavedEvent::class);
+
+            // Récupérez le 'test' variable
+            $event->setTest($post->getTitre());
+            $test = $event->getTest();
+
+            return $this->render('post/post_event_result.html.twig', [
+                'post' => $post,
+                'test' => $test,
+            ]);
         }
 
         return $this->render('post/new.html.twig', [
@@ -71,7 +86,7 @@ class PostController extends AbstractController
     #[Route('/{id}', name: 'app_post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
             $entityManager->remove($post);
             $entityManager->flush();
         }
