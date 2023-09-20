@@ -48,6 +48,7 @@ class PostController extends AbstractController
             return $this->render('post/post_event_result.html.twig', [
                 'post' => $post,
                 'test' => $test,
+                'test2' => 'test2',
             ]);
         }
 
