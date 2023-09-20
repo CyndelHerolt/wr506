@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1>{{ date }}</h1>
+    <h1>{{ 'now'|format_datetime('full', 'short') }}</h1>
 
 {% endblock %}
 {% block footer %}
