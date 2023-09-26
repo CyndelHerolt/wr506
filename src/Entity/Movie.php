@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource(
@@ -37,15 +38,23 @@ class Movie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'La description est obligatoire.')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['movie:read'])]
+    #[Assert\Date(message: 'La date de sortie doit être au format YYYY-MM-DD.')]
     private ?\DateTimeInterface $releaseDate = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'La durée est obligatoire.')]
     private ?string $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'movies')]
