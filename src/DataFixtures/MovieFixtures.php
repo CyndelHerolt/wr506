@@ -4,14 +4,15 @@ namespace App\DataFixtures;
 
 use App\Entity\Movie;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class MovieFixtures extends Fixture
+class MovieFixtures extends Fixture implements OrderedFixtureInterface
 {
     // définir l'ordre de chargement des fixtures
     public function getOrder(): int
     {
-        return 3;
+        return 4;
     }
 
     public function load(ObjectManager $manager): void

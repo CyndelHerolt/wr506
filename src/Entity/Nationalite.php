@@ -7,6 +7,7 @@ use App\Repository\NationaliteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NationaliteRepository::class)]
 #[ApiResource]
@@ -17,6 +18,7 @@ class Nationalite
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['actor:read'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
