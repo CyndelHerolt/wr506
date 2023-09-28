@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -30,6 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(),
     ]
 )]
+//    #[ApiFilter(BooleanFilter::class, properties: ['actor'])]
 class Movie
 {
     #[ORM\Id]
@@ -40,6 +44,7 @@ class Movie
     #[ORM\Column(length: 255)]
     #[Groups(['movie:read'])]
     #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]

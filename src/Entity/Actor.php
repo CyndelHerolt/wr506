@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -39,11 +41,13 @@ class Actor
     #[ORM\Column(length: 255)]
     #[Groups(['movie:read', 'actor:read'])]
     #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $firstName = null;
 
     #[Groups(['movie:read', 'actor:read'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $lastName = null;
 
     #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'actor')]
