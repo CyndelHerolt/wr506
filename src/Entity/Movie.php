@@ -39,11 +39,11 @@ class Movie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $title = null;
