@@ -39,6 +39,7 @@ class Movie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['movie:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -69,6 +70,10 @@ class Movie
     #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
     #[Groups(['movie:read'])]
     private Collection $actor;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['movie:read'])]
+    private ?string $image = null;
 
     public function __construct()
     {
@@ -160,6 +165,18 @@ class Movie
     public function removeActor(Actor $actor): static
     {
         $this->actor->removeElement($actor);
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

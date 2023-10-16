@@ -24,6 +24,16 @@ class MovieFixtures extends Fixture implements OrderedFixtureInterface
             $movie->setReleaseDate(new \DateTime());
             $movie->setDuration(120+$i);
             $movie->setCategory($this->getReference('category_'.rand(1, 4)));
+            // pour le film 1, on ajoute une image nommée shaunofthedead.webp
+            if (1 === $i) {
+                $movie->setImage('shaunofthedead.webp');
+            } elseif (2 === $i) {
+                $movie->setImage('vice.webp');
+            } elseif (3 === $i) {
+                $movie->setImage('prestige.jpg');
+            } elseif (4 === $i) {
+                $movie->setImage('fmj.jpg');
+            }
 
             $actors = [];
             foreach (range(1, rand(2, 6)) as $j) {
