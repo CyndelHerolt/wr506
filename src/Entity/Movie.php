@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
@@ -33,7 +34,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(),
     ]
 )]
-//    #[ApiFilter(BooleanFilter::class, properties: ['actor'])]
+#[ApiFilter(BooleanFilter::class, properties: ['online'])]
+#[ApiFilter(OrderFilter::class, properties: ['title'], arguments: ['orderParameterName' => 'order'])]
 class Movie
 {
     #[ORM\Id]
