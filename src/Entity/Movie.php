@@ -75,6 +75,9 @@ class Movie
     #[Groups(['movie:read'])]
     private ?string $image = null;
 
+    #[ORM\Column]
+    private ?bool $online = null;
+
     public function __construct()
     {
         $this->actor = new ArrayCollection();
@@ -177,6 +180,18 @@ class Movie
     public function setImage(?string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function isOnline(): ?bool
+    {
+        return $this->online;
+    }
+
+    public function setOnline(bool $online): static
+    {
+        $this->online = $online;
 
         return $this;
     }
