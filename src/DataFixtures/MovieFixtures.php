@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class MovieFixtures extends Fixture implements OrderedFixtureInterface
 {
@@ -17,12 +18,15 @@ class MovieFixtures extends Fixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        $faker = Factory::create();
+
         for ($i = 1; $i < 30; ++$i) {
             $movie = new Movie();
-            $movie->setTitle('title '.$i);
-            $movie->setDescription('description '.$i);
-            $movie->setReleaseDate(new \DateTime());
-            $movie->setDuration(120+$i);
+            $movie->setTitle($faker->sentence(3));
+            $movie->setDescription($faker->paragraph);
+            $movie->setReleaseDate($faker->dateTimeThisCentury);
+            $movie->setDuration($faker->numberBetween(60, 200));
+            $movie->setOnline($faker->boolean(80));
             $movie->setCategory($this->getReference('category_'.rand(1, 4)));
             // pour le film 1, on ajoute une image nommée shaunofthedead.webp
             if (1 === $i) {
@@ -33,6 +37,8 @@ class MovieFixtures extends Fixture implements OrderedFixtureInterface
                 $movie->setImage('prestige.jpg');
             } elseif (4 === $i) {
                 $movie->setImage('fmj.jpg');
+            } else {
+                $movie->setImage('revenant.jpg');
             }
 
             $actors = [];
