@@ -21,7 +21,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('product/{id}', name: 'app_product_view', methods: ['GET'])]
-    public function viewProduct(Request $request, $id): Response
+    public function viewProduct(Request $request, int $id): Response
     {
 
         $id = $request->get('id');

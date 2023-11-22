@@ -36,16 +36,16 @@ class Actor
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['actor:read'])]
+    #[Groups(['actor:read', 'category:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['movie:read', 'actor:read'])]
+    #[Groups(['movie:read', 'actor:read', 'category:read'])]
     #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $firstName = null;
 
-    #[Groups(['movie:read', 'actor:read'])]
+    #[Groups(['movie:read', 'actor:read', 'category:read'])]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]

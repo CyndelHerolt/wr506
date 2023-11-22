@@ -41,27 +41,27 @@ class Movie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['movie:read', 'actor:read'])]
+    #[Groups(['movie:read', 'actor:read', 'category:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['movie:read', 'actor:read'])]
+    #[Groups(['movie:read', 'actor:read', 'category:read'])]
     #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'category:read'])]
     #[Assert\NotBlank(message: 'La description est obligatoire.')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'category:read'])]
     #[Assert\Date(message: 'La date de sortie doit être au format YYYY-MM-DD.')]
     private ?\DateTimeInterface $releaseDate = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'category:read'])]
     #[Assert\NotBlank(message: 'La durée est obligatoire.')]
     private ?string $duration = null;
 
@@ -70,11 +70,11 @@ class Movie
     private ?Category $category = null;
 
     #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'category:read'])]
     private Collection $actor;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'category:read'])]
     private ?string $image = null;
 
     #[ORM\Column]
