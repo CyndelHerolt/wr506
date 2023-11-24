@@ -36,6 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 #[ApiFilter(BooleanFilter::class, properties: ['online'])]
 #[ApiFilter(OrderFilter::class, properties: ['title'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'name' => 'partial'])]
 class Movie
 {
     #[ORM\Id]
@@ -57,7 +58,6 @@ class Movie
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['movie:read', 'category:read'])]
-    #[Assert\Date(message: 'La date de sortie doit être au format YYYY-MM-DD.')]
     private ?\DateTimeInterface $releaseDate = null;
 
     #[ORM\Column(length: 50)]
