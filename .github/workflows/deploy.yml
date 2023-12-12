@@ -6,7 +6,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Demo LS on MMI VPS
+      - name: Demo MMI VPS
         uses: appleboy/ssh-action@master
         with:
           HOST: ${{ secrets.HOST }}
