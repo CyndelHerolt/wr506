@@ -2,6 +2,8 @@ name: Deploy
 on:
   pull_request:
     branches: [ "main" ]
+  push:
+    branches: [ "main" ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,4 +17,4 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script : ./deploy.sh
+          script: ./deploy.sh
