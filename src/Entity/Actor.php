@@ -29,8 +29,11 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Put(),
         new Patch(),
         new Delete(),
-    ]
+    ],
+    security: "is_granted('ROLE_USER')",
 )]
+#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
+#[Post(security: "is_granted('ROLE_ADMIN')")]
 class Actor
 {
     #[ORM\Id]

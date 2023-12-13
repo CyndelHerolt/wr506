@@ -28,6 +28,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Delete(),
     ]
 )]
+#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
+#[Post(security: "is_granted('ROLE_ADMIN')")]
 class Category
 {
     #[ORM\Id]
