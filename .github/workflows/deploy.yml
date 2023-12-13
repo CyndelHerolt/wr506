@@ -15,4 +15,4 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: ./home/mmi21h05/public_html/wr506/deploy.sh
+          script: cd /home/mmi21h05/public_html/wr506 && ./deploy.sh
