@@ -13,9 +13,9 @@ echo "Installation des dépendances"
 composer install
 echo "end installation des dépendances"
 
-echo "generation des assets"
-npm run dev
-echo "fin génératation des assets"
+echo "Mise à jour de la base de données"
+bin/console d:s:u -f
+echo "end mise à jour de la base de données"
 
 echo "Nettoyage cache"
 bin/console cache:clear
