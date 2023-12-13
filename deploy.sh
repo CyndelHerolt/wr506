@@ -6,7 +6,7 @@
 
 echo "Début mise à jour"
 echo "Git Pull"
-sudo git pull origin main
+git pull origin main
 echo "end git pull"
 
 echo "Installation des dépendances"
