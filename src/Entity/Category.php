@@ -33,7 +33,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['category:read'])]
+    #[Groups(['movie:read','category:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -43,6 +43,9 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Movie::class)]
     #[Groups(['category:read'])]
     private Collection $movies;
+
+    #[ORM\ManyToOne(inversedBy: 'category')]
+    private ?MediaObject $mediaObject = null;
 
     public function __construct()
     {
@@ -92,6 +95,18 @@ class Category
                 $movie->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMediaObject(): ?MediaObject
+    {
+        return $this->mediaObject;
+    }
+
+    public function setMediaObject(?MediaObject $mediaObject): static
+    {
+        $this->mediaObject = $mediaObject;
 
         return $this;
     }
